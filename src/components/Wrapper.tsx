@@ -14,6 +14,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import LoginView from "@/modules/home/auth/LoginView";
 import NotFoundView from "@/modules/home/not-found/NotFoundView";
 import ProductView from "@/modules/Product/ProductView";
+import RecordView from "@/modules/Record/RecordView";
 
 const router = createBrowserRouter([
 	{
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
 			{
 				path: "product",
 				element: <ProductView />,
+			},
+			{
+				path: "record",
+				element: <RecordView />,
 			}
 		],
 	},

@@ -1,6 +1,6 @@
-import {  useMutation, QueriesOptions, useQuery, useQueryClient, type UseMutationOptions } from "@tanstack/react-query"
+import {  useMutation, QueriesOptions, useQuery, useQueryClient, type UseMutationOptions, UseQueryOptions } from "@tanstack/react-query"
 import { ProductType } from "./types"
-import { ApiResponse,  } from "@/shared/types"
+import { ApiResponse, PaginatedType,  } from "@/shared/types"
 import productServices from "./services"
 
 export const fetchProducts = {
@@ -54,17 +54,18 @@ export const DeleteProduct = {
     }
 }
 
-// export const getProductWithPagination = {
-//     useQuery: (queryKey: { key: string; page: number; limit: number }, opt?: UseQueryOptions<PaginatedType, Error>) =>
-//         useQuery<PaginatedType, Error>({
-//             queryKey: [queryKey.key, queryKey.page, queryKey.limit],
-//             queryFn: async () => {
-//                 const res = await productServices.getProductWithPagination(
-//                     queryKey.page,
-//                     queryKey.limit
-//                 )
+export const getProductWithPagination = {
+    useQuery: (queryKey: { key: string; page: number; limit: number }, opt?: UseQueryOptions<PaginatedType, Error>) =>
+        useQuery<PaginatedType, Error>({
+            queryKey: [queryKey.key, queryKey.page, queryKey.limit],
+            queryFn: async () => {
+                const res = await productServices.getProductWithPagination(
+                    queryKey.page,
+                    queryKey.limit
+                )
 
-//                 return res.data
-//             },
-//         })
-// }
+                return res.data
+            },
+            ...opt
+        })
+}

@@ -1,6 +1,5 @@
 import { ProductType } from "@/api/product/types"
 import { ColumnDef } from "@tanstack/react-table"
-import ProductActions from "./ProductActions"
 
 export const columns: ColumnDef<ProductType>[] = [
   {
@@ -31,21 +30,21 @@ export const columns: ColumnDef<ProductType>[] = [
     },
   },
   {
-    accessorKey: "stock",
-    header: () => <div className="text-center">Stock</div>,
+    accessorKey: "quantity",
+    header: () => <div className="text-center">Quantity</div>,
     cell: ({ row }) => {
-      const stock = row.getValue("stock") as string
+      const quantity = row.getValue("quantity") as string
  
-      return <div className="text-center font-medium">{stock}</div>
+      return <div className="text-center font-medium">{quantity}</div>
     },
   },
   {
-    accessorKey: "price",
-    header: () => <div className="text-center">Price</div>,
+    accessorKey: "sellingPrice",
+    header: () => <div className="text-center">Selling Price</div>,
     cell: ({ row }) => {
-      const price = row.getValue("price") as string
+      const sellingPrice = row.getValue("sellingPrice") as string
  
-      return <div className="text-center font-medium">{price}</div>
+      return <div className="text-center font-medium">{sellingPrice}</div>
     },
   },
   {
@@ -58,19 +57,30 @@ export const columns: ColumnDef<ProductType>[] = [
     },
   },
   {
-    accessorKey: "createdDate",
-    header: () => <div className="text-center">Created Datae</div>,
+    accessorKey: "totalProfit",
+    header: () => <div className="text-center">Total Profit</div>,
     cell: ({ row }) => {
-      const date = (row.getValue('createdDate') as string).split('T')[0]
+      const profit = row.getValue("totalProfit") as string
+ 
+      return <div className="text-center font-medium">{profit}</div>
+    },
+  },
+  {
+    accessorKey: "totalPrice",
+    header: () => <div className="text-center">Total Price</div>,
+    cell: ({ row }) => {
+      const price = row.getValue("totalPrice") as string
+ 
+      return <div className="text-center font-medium">{price}</div>
+    },
+  },
+  {
+    accessorKey: "saleDate",
+    header: () => <div className="text-center">Sale Datae</div>,
+    cell: ({ row }) => {
+      const date = (row.getValue('saleDate') as string).split('T')[0]
  
       return <div className="text-center font-medium">{date}</div>
     },
   },
-  {
-    accessorKey: "actions",
-    header: () => <div className="text-center">Actions</div>,
-    cell: ({ row }) => {
-      return <ProductActions product={row.original}></ProductActions>
-    },
-  }
 ]

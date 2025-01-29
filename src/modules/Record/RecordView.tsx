@@ -5,17 +5,17 @@ import { useEffect, useState } from "react";
 
 const ProductView = () => {
   const [page, setPage] = useState(1);
-  const [queryKey, setQueryKey] = useState({key:'getProductWithPagination', page: page, limit: 10});
+  const [queryKey, setQueryKey] = useState({key:'getSaleReportWithPagination', page: page, limit: 10});
 
   const changePage = (page: number) => {
     setPage(page);
   };
 
   useEffect(() => {
-    setQueryKey({key:'getProductWithPagination', page: page, limit: 10});
+    setQueryKey({key:'getSaleReportWithPagination', page: page, limit: 10});
   }, [page]);
 
-  const { data: product } = api.product.getProductWithPagination.useQuery(queryKey);
+  const { data: product } = api.record.getSaleReportWithPagination.useQuery(queryKey);
 
   return (
     <>
