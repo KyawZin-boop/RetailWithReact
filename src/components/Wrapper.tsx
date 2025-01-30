@@ -15,6 +15,7 @@ import LoginView from "@/modules/home/auth/LoginView";
 import NotFoundView from "@/modules/home/not-found/NotFoundView";
 import ProductView from "@/modules/Product/ProductView";
 import RecordView from "@/modules/Record/RecordView";
+import CartView from "@/modules/cart/CartView";
 
 const router = createBrowserRouter([
 	{
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
 			{
 				path: "record",
 				element: <RecordView />,
+			},
+			{
+				path: "cart",
+				element: <CartView />,
 			}
 		],
 	},

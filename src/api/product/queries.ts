@@ -1,5 +1,5 @@
 import {  useMutation, QueriesOptions, useQuery, useQueryClient, type UseMutationOptions, UseQueryOptions } from "@tanstack/react-query"
-import { ProductType } from "./types"
+import { ProductInputType, ProductType } from "./types"
 import { ApiResponse, PaginatedType,  } from "@/shared/types"
 import productServices from "./services"
 
@@ -17,11 +17,11 @@ export const fetchProducts = {
 }
 
 export const AddProduct = {
-    useMutation: (opt?: UseMutationOptions<unknown, Error, ProductType, unknown>) => {
+    useMutation: (opt?: UseMutationOptions<unknown, Error, ProductInputType, unknown>) => {
         const queryClient = useQueryClient();
         return useMutation({
             mutationKey: ['addProduct'],
-            mutationFn: (product: ProductType) => productServices.addProduct(product),
+            mutationFn: (product: ProductInputType) => productServices.addProduct(product),
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['getAllProducts']});
             },
@@ -31,11 +31,11 @@ export const AddProduct = {
 }
 
 export const UpdateProduct = {
-    useMutation: (opt?: UseMutationOptions<unknown, Error, ProductType, unknown>) => {
+    useMutation: (opt?: UseMutationOptions<unknown, Error, ProductInputType, unknown>) => {
         const queryClient = useQueryClient();
         return useMutation({
             mutationKey: ['updateProduct'],
-            mutationFn: (product: ProductType) => productServices.updateProduct(product),
+            mutationFn: (product: ProductInputType) => productServices.updateProduct(product),
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['getAllProducts']});
             },

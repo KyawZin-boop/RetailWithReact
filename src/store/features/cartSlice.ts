@@ -14,7 +14,7 @@ const initialState: CartState = {
 };
 
 export const selectTotalQuantity = (state: RootState): number => {
-    return state.cart.cartItems.reduce((total, item) => total + item.quantity, 0);
+    return state.cart.cartItems.reduce((total: number, item: CartType) => total + item.quantity, 0);
   };
 
 // Create the slice
@@ -42,6 +42,7 @@ export const cartSlice = createSlice({
           ...product, // Spread the properties of ProductType
           quantity: 1, // Add the quantity field
         };
+        console.log(cartItem);
         state.cartItems.push(cartItem);
       }
       toast({
@@ -66,6 +67,10 @@ export const cartSlice = createSlice({
         );
       }
     },
+    increaseItem: (state, action: PayloadAction<string>) => {
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload
+      );
   },
 });
 

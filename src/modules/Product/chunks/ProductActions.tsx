@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { MinusIcon, PlusIcon } from "lucide-react"
 import { addToCart, reduceItem } from "@/store/features/cartSlice"
 import { RootState, useAppDispatch, useAppSelector } from "@/store"
+import { CartType } from "@/api/cart/types"
+import { openEditDialog } from "@/store/features/dialogSlice"
 
 const ProductActions = ({product}: {product: ProductType}) => {
 
@@ -12,7 +14,7 @@ const ProductActions = ({product}: {product: ProductType}) => {
   return (
     <>
     <div className="flex justify-evenly">
-      {!cartItems.find((item) => item.id === product.id) ? (<Button className="bg-blue-500 hover:bg-blue-600 rounded-md p-2 px-4"
+      {!cartItems.find((item: CartType) => item.id === product.id) ? (<Button className="bg-blue-500 hover:bg-blue-600 rounded-md p-2 px-4"
         onClick={() => dispatch(addToCart(product))}
       >
         Add to Cart
@@ -25,7 +27,7 @@ const ProductActions = ({product}: {product: ProductType}) => {
         >
           <MinusIcon />
         </span>
-        <span className="w-[30px] text-black text-center">{cartItems.find((item) => item.id === product.id)?.quantity}</span>
+        <span className="w-[30px] text-black text-center">{cartItems.find((item: CartType) => item.id === product.id)?.quantity}</span>
         <span
           className="rounded-full align-middle px-2 font-semibold text-green-600 cursor-pointer hover:bg-gray-200 select-none"
           onClick={() => dispatch(addToCart(product))}
@@ -37,7 +39,7 @@ const ProductActions = ({product}: {product: ProductType}) => {
       <div>
         <Button
           className="bg-yellow-500 hover:bg-yellow-600 rounded-md p-2 px-4 me-2"
-          // onClick="openEditDialog(props.product)"
+          onClick={() => dispatch(openEditDialog(product))}
         >
           Edit
         </Button>

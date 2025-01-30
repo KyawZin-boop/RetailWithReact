@@ -4,5 +4,7 @@ export type LoginPayload = {
 }
 
 export type LoginResponse = {
-    token: string;
+    status: number;
+    message: string;
+    data: string;
 }

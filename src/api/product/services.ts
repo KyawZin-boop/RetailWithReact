@@ -10,7 +10,7 @@ const getAllProducts = async (): Promise<ApiResponse<ProductType[]>> => {
     return response.data;
 }
 
-const addProduct = async (product: ProductType): Promise<ApiResponse<ProductInputType>> => {
+const addProduct = async (product: ProductInputType): Promise<ApiResponse<ProductInputType>> => {
     const response = await axios.post<ApiResponse<ProductInputType>>(`${baseUrl}/AddProduct`, product);
 
     return response.data;

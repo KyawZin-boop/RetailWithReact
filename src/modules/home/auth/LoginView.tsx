@@ -49,7 +49,8 @@ const LoginView = () => {
 	const { mutate: loginUser } = loginMutation.useMutation({
 		onMutate: () => setIsLoading(true),
 		onSuccess: (data) => {
-			userLogin(data.token)
+			if(data.status === 0) {
+			userLogin(data.data)
 
 			const routeToRedirect = location.state?.from
 				? location.state.from.pathname
@@ -62,6 +63,13 @@ const LoginView = () => {
 				}`,
 				description: "Successful login",
 			})
+		} else {
+			toast({
+				title: "Login fail!",
+				description: data.message,
+				variant: "destructive",
+			})
+		}
 		},
 		onError: (error) => {
 			console.error("Error during login:", error)

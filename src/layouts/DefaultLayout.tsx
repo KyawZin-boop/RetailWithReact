@@ -18,10 +18,10 @@ const DefaultLayout = () => {
       <DesktopSidebar />
       <main className="w-full min-h-full overflow-y-auto">
         <nav className="flex justify-end p-3">
-          <NavLink to="/cart" className="relative cursor-pointer">
-            <i className="fa fa-cart-shopping text-blue-600 text-2xl align-middle">
+          <NavLink to="/cart" className="relative cursor-pointer me-5">
+            <i className="fa fa-cart-shopping text-blue-600 text-xl align-middle">
               {totalQuantity > 0 ? (
-                <span className="text-red-500 absolute -top-2 -right-1 text-xs bg-white font-semibold rounded-full px-1 z-10">
+                <span className="text-white absolute -top-1.5 -right-3 text-xs bg-red-500 font-semibold rounded-full px-1.5 z-10">
                   {totalQuantity}
                 </span>
               ) : null}

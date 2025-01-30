@@ -25,27 +25,17 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[] | undefined;
-  page: number;
-  changePage: (page: number) => void;
-  pageSize: number;
-  totalProduct: number | undefined;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  page,
-  changePage,
-  pageSize,
-  totalProduct,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  const totalPage = Math.ceil(totalProduct! / pageSize);
 
   return (
     <div>
@@ -56,7 +46,7 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-white">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -79,8 +69,7 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) =>
                     cell.column.id === "No" ? (
                       <TableCell key={cell.id} className="text-center">
-                        {row.index + 1 + (page - 1) * 10}
-                        {/* {(row.index + 1) + (page - 1) * 10} */}
+                        {row.index + 1}
                       </TableCell>
                     ) : (
                       <TableCell key={cell.id}>
@@ -109,73 +98,17 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-end space-x-2 py-4">
         <Pagination>
           <PaginationContent>
-            {/* Previous Button */}
             <PaginationItem>
-              <PaginationPrevious
-                onClick={() => {
-                  if (page > 1) changePage(page - 1);
-                }}
-                className={page === 1 ? "disabled" : ""} // Disable if on the first page
-              />
+              <PaginationPrevious href="#" />
             </PaginationItem>
-
-            {/* First Page */}
-            {page > 2 && (
-              <PaginationItem>
-                <PaginationLink onClick={() => changePage(1)}>1</PaginationLink>
-              </PaginationItem>
-            )}
-
-            {/* Ellipsis before current page */}
-            {page > 3 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
-
-            {/* Current Page and Surrounding Pages */}
-            {Array.from({ length: totalPage }, (_, i) => {
-              const pageNumber = i + 1;
-
-              if (pageNumber >= page - 1 && pageNumber <= page + 2) {
-                return (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      onClick={() => changePage(pageNumber)}
-                      isActive={pageNumber === page}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              }
-              return null;
-            }).filter(Boolean)}
-
-            {/* Ellipsis after current page */}
-            {page < totalPage - 2 && (
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-            )}
-
-            {/* Last Page */}
-            {page < totalPage - 1 && (
-              <PaginationItem>
-                <PaginationLink onClick={() => changePage(totalPage)}>
-                  {totalPage}
-                </PaginationLink>
-              </PaginationItem>
-            )}
-
-            {/* Next Button */}
             <PaginationItem>
-              <PaginationNext
-                onClick={() => {
-                  if (page < totalPage) changePage(page + 1);
-                }}
-                className={page === totalPage ? "disabled" : ""} // Disable if on the last page
-              />
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
             </PaginationItem>
           </PaginationContent>
         </Pagination>
