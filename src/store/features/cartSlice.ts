@@ -67,15 +67,39 @@ export const cartSlice = createSlice({
         );
       }
     },
-    increaseItem: (state, action: PayloadAction<string>) => {
+    increaseItem: (state, action: PayloadAction<CartType>) => {
+      const product = action.payload;
       const existingItem = state.cartItems.find(
-        (item) => item.id === action.payload
+        (item) => item.id === product.id
       );
+
+      if (existingItem && existingItem.quantity < product.stock) {
+        existingItem.quantity += 1;
+      } else if (existingItem?.quantity === product.stock) {
+        toast({
+          title: "Stock Limit Reached",
+          description: "You have reached the stock limit for this product",
+          variant: "destructive",
+        });
+        return;
+      } else {
+        const cartItem: CartType = {
+          ...product, // Spread the properties of ProductType
+          quantity: 1, // Add the quantity field
+        };
+        console.log(cartItem);
+        state.cartItems.push(cartItem);
+      }
+      toast({
+        title: "Success",
+        description: "Product added to cart",
+      });
   },
+}
 });
 
 // Export the actions
-export const { addToCart, removeFromCart, reduceItem } = cartSlice.actions;
+export const { addToCart, removeFromCart, reduceItem, increaseItem } = cartSlice.actions;
 
 // Export the reducer
 export default cartSlice.reducer;
