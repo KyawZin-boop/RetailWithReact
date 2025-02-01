@@ -9,7 +9,7 @@ const DesktopSidebar = () => {
         return ''
     }
 
-    return <aside className={'lg:flex flex-col hidden min-h-svh min-w-[220px] lg:min-w-[240px] bg-white h-full'}>
+    return <aside className={'lg:flex flex-col hidden min-h-svh min-w-[220px] lg:min-w-[240px] bg-white h-full border-r-2 border-blue-200 shadow-sm'}>
         <div className="flex flex-col items-center justify-center h-20">
             <h4
                 className="text-3xl leading-[0.75] font-bold tracking-normal cursor-pointer"

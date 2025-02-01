@@ -17,7 +17,7 @@ const DefaultLayout = () => {
     <div className="h-svh flex overflow-hidden">
       <DesktopSidebar />
       <main className="w-full min-h-full overflow-y-auto">
-        <nav className="flex justify-end p-3">
+        <nav className="flex justify-end p-3 border-b-2 border-blue-200 shadow-md">
           <NavLink to="/cart" className="relative cursor-pointer me-5">
             <i className="fa fa-cart-shopping text-blue-600 text-xl align-middle">
               {totalQuantity > 0 ? (

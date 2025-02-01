@@ -18,11 +18,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import api from "@/api";
 import { toast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { closeDialog } from "@/store/features/dialogSlice";
 
 const formSchema = z.object({
   productCode: z.string().min(4, {
@@ -46,6 +47,7 @@ const ProductDialog = () => {
   const isOpen = useAppSelector((state) => state.dialog.isOpen);
   const isEdit = useAppSelector((state) => state.dialog.isEdit);
   const editProduct = useAppSelector((state) => state.dialog.editProduct);
+  const dispatch = useAppDispatch();
 
   const queryClient = useQueryClient();
 
@@ -58,10 +60,11 @@ const ProductDialog = () => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getProductWithPagination"] });
       toast({
         title: "Product added successfully",
       });
-      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      dispatch(closeDialog());
     },
   });
 
@@ -74,10 +77,11 @@ const ProductDialog = () => {
       });
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getProductWithPagination"] });
       toast({
         title: "Product updated successfully",
       });
-      queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+      dispatch(closeDialog());
     },
   });
 
@@ -100,6 +104,15 @@ const ProductDialog = () => {
         stock: editProduct.stock || 0,
         price: editProduct.price || 0,
         profitPerItem: editProduct.profitPerItem || 0,
+      });
+    }
+    else{
+      form.reset({
+        productCode: "",
+        name: "",
+        stock: 0,
+        price: 0,
+        profitPerItem: 0,
       });
     }
   }, [isEdit, editProduct, form]);
@@ -158,8 +171,16 @@ const ProductDialog = () => {
                   <FormItem>
                     <FormLabel>Stock</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Enter product stock" {...field} 
-                      onChange={(e) => field.onChange(e.target.value === "" ? "" : Number(e.target.value))}/>
+                      <Input
+                        type="number"
+                        placeholder="Enter product stock"
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === "" ? "" : Number(e.target.value)
+                          )
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -172,7 +193,11 @@ const ProductDialog = () => {
                   <FormItem>
                     <FormLabel>Price</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="shadcn" {...field} />
+                      <Input type="number" placeholder="shadcn" {...field} onChange={(e) =>
+                          field.onChange(
+                            e.target.value === "" ? "" : Number(e.target.value)
+                          )
+                        } />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -185,13 +210,31 @@ const ProductDialog = () => {
                   <FormItem>
                     <FormLabel>Profit Per Item"</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="shadcn" {...field} />
+                      <Input type="number" placeholder="shadcn" {...field} onChange={(e) =>
+                          field.onChange(
+                            e.target.value === "" ? "" : Number(e.target.value)
+                          )
+                        }/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <div className="flex justify-end">
+                <Button
+                  type="button"
+                  className="bg-gray-500 hover:bg-gray-600 me-2"
+                  onClick={() => dispatch(closeDialog())}
+                >
+                  Cancle
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-green-500 hover:bg-green-600"
+                >
+                  Save
+                </Button>
+              </div>
             </form>
           </Form>
         </DialogContent>

@@ -15,13 +15,13 @@ const ProductView = () => {
     setQueryKey({key:'getSaleReportWithPagination', page: page, limit: 10});
   }, [page]);
 
-  const { data: product } = api.record.getSaleReportWithPagination.useQuery(queryKey);
+  const { data: record } = api.record.getSaleReportWithPagination.useQuery(queryKey);
 
   return (
     <>
         <div className="container mx-auto p-5">
-          <h1 className="text-center mb-5 text-2xl text-blue-600 font-bold">Instock Products</h1>
-          <DataTable columns={columns} data={product?.items} page={page} changePage={changePage} pageSize={10} totalProduct={product?.totalCount} />
+          <h1 className="text-center mb-10 text-2xl text-blue-600 font-bold drop-shadow-xl">Sale Records</h1>
+          <DataTable columns={columns} data={record?.items} page={page} changePage={changePage} pageSize={10} totalProduct={record?.totalCount} />
         </div>
     </>
   );

@@ -100,8 +100,8 @@ const LoginView = () => {
 						className="w-12 h-12"
 						loading="lazy"
 					/>
-					<p className="text-[10px] leading-[0.5rem] text-gray-400 font-semibold tracking-normal pb-4">
-						<span className="text-primary">FUSION </span>
+					<p className="text-[10px] leading-[0.5rem] text-black font-bold tracking-normal pb-4">
+						<span className="text-blue-500">FUSION </span>
 						SOLUTION
 					</p>
 
@@ -156,7 +156,7 @@ const LoginView = () => {
 							/>
 							<Button
 								type="submit"
-								className="w-full"
+								className="w-full bg-blue-600"
 								disabled={isLoading}
 							>
 								{isLoading ? "Logging in..." : "Login"}

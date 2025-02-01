@@ -4,7 +4,7 @@ import { MinusIcon, PlusIcon } from "lucide-react"
 import { addToCart, reduceItem } from "@/store/features/cartSlice"
 import { RootState, useAppDispatch, useAppSelector } from "@/store"
 import { CartType } from "@/api/cart/types"
-import { openEditDialog } from "@/store/features/dialogSlice"
+import { openAlertDialog, openEditDialog } from "@/store/features/dialogSlice"
 
 const ProductActions = ({product}: {product: ProductType}) => {
 
@@ -14,7 +14,7 @@ const ProductActions = ({product}: {product: ProductType}) => {
   return (
     <>
     <div className="flex justify-evenly">
-      {!cartItems.find((item: CartType) => item.id === product.id) ? (<Button className="bg-blue-500 hover:bg-blue-600 rounded-md p-2 px-4"
+      {!cartItems.find((item: CartType) => item.id === product.id) ? (<Button className="bg-blue-600 hover:bg-blue-700 rounded-md p-2 px-4"
         onClick={() => dispatch(addToCart(product))}
       >
         Add to Cart
@@ -45,7 +45,7 @@ const ProductActions = ({product}: {product: ProductType}) => {
         </Button>
         <Button
           className="bg-red-500 hover:bg-red-600 rounded-md p-2 px-4"
-          // onClick="openDeleteDialog(props.product.id)"
+          onClick={() => dispatch(openAlertDialog(product))}
         >
           Delete
         </Button>

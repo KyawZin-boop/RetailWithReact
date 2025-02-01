@@ -14,8 +14,11 @@ const initialState: CartState = {
 };
 
 export const selectTotalQuantity = (state: RootState): number => {
-    return state.cart.cartItems.reduce((total: number, item: CartType) => total + item.quantity, 0);
-  };
+  return state.cart.cartItems.reduce(
+    (total: number, item: CartType) => total + item.quantity,
+    0
+  );
+};
 
 // Create the slice
 export const cartSlice = createSlice({
@@ -24,6 +27,16 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action: PayloadAction<ProductType>) => {
       const product = action.payload;
+
+      if(product.stock <= 0) {
+        toast({
+          title: "Out of Stock",
+          description: "There no item in stock",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const existingItem = state.cartItems.find(
         (item) => item.id === product.id
       );
@@ -94,12 +107,21 @@ export const cartSlice = createSlice({
         title: "Success",
         description: "Product added to cart",
       });
+    },
+    clearCart: (state) => {
+      state.cartItems = [];
+    },
   },
-}
 });
 
 // Export the actions
-export const { addToCart, removeFromCart, reduceItem, increaseItem } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  reduceItem,
+  increaseItem,
+  clearCart,
+} = cartSlice.actions;
 
 // Export the reducer
 export default cartSlice.reducer;

@@ -1,4 +1,4 @@
-import {  useMutation, QueriesOptions, useQuery, useQueryClient, type UseMutationOptions, UseQueryOptions } from "@tanstack/react-query"
+import {  useMutation, QueriesOptions, useQuery, type UseMutationOptions, UseQueryOptions } from "@tanstack/react-query"
 import { ProductInputType, ProductType } from "./types"
 import { ApiResponse, PaginatedType,  } from "@/shared/types"
 import productServices from "./services"
@@ -18,13 +18,9 @@ export const fetchProducts = {
 
 export const AddProduct = {
     useMutation: (opt?: UseMutationOptions<unknown, Error, ProductInputType, unknown>) => {
-        const queryClient = useQueryClient();
         return useMutation({
             mutationKey: ['addProduct'],
             mutationFn: (product: ProductInputType) => productServices.addProduct(product),
-            onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['getAllProducts']});
-            },
             ...opt
         })
     }
@@ -32,13 +28,9 @@ export const AddProduct = {
 
 export const UpdateProduct = {
     useMutation: (opt?: UseMutationOptions<unknown, Error, ProductInputType, unknown>) => {
-        const queryClient = useQueryClient();
         return useMutation({
             mutationKey: ['updateProduct'],
             mutationFn: (product: ProductInputType) => productServices.updateProduct(product),
-            onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['getAllProducts']});
-            },
             ...opt
         })
     }
@@ -55,13 +47,13 @@ export const DeleteProduct = {
 }
 
 export const getProductWithPagination = {
-    useQuery: (queryKey: { key: string; page: number; limit: number }, opt?: UseQueryOptions<PaginatedType, Error>) =>
+    useQuery: (pagination: { page: number; limit: number }, opt?: UseQueryOptions<PaginatedType, Error>) =>
         useQuery<PaginatedType, Error>({
-            queryKey: [queryKey.key, queryKey.page, queryKey.limit],
+            queryKey: ["getProductWithPagination", pagination.page, pagination.limit],
             queryFn: async () => {
                 const res = await productServices.getProductWithPagination(
-                    queryKey.page,
-                    queryKey.limit
+                    pagination.page,
+                    pagination.limit
                 )
 
                 return res.data

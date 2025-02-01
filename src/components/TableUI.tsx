@@ -51,12 +51,12 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader className="bg-blue-400">
+          <TableHeader className="bg-blue-600">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead key={header.id} className="text-white">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -160,7 +160,7 @@ export function DataTable<TData, TValue>({
             )}
 
             {/* Last Page */}
-            {page < totalPage - 1 && (
+            {page < totalPage - 2 && (
               <PaginationItem>
                 <PaginationLink onClick={() => changePage(totalPage)}>
                   {totalPage}

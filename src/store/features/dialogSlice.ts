@@ -2,15 +2,19 @@ import { ProductType } from "@/api/product/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DialogState {
+    isAlertOpen: boolean;
     isOpen: boolean;
     isEdit: boolean;
     editProduct: ProductType | null;
+    deleteProduct: ProductType | null;
 }
 
 const initialState: DialogState = {
+    isAlertOpen: false,
     isOpen: false,
     isEdit: false,
     editProduct: null,
+    deleteProduct: null,
 };
 
 export const DialogSlice = createSlice({
@@ -19,10 +23,11 @@ export const DialogSlice = createSlice({
     reducers: {
         openDialog: (state) => {
             state.isOpen = true;
+            state.isEdit = false;
         },
         closeDialog: (state) => {
             state.isOpen = false;
-            state.isEdit = false;
+            state.isAlertOpen = false;
             state.editProduct = null;
         },
         openEditDialog: (state, action: PayloadAction<ProductType>) => {
@@ -30,8 +35,12 @@ export const DialogSlice = createSlice({
             state.isEdit = true;
             state.editProduct = action.payload;
         },
+        openAlertDialog: (state, action: PayloadAction<ProductType | null>) => {
+            state.isAlertOpen = true;
+            state.deleteProduct = action.payload;
+        }
     },
 });
 
-export const { openDialog, closeDialog, openEditDialog } = DialogSlice.actions;
+export const { openDialog, closeDialog, openEditDialog, openAlertDialog } = DialogSlice.actions;
 export default DialogSlice.reducer;
