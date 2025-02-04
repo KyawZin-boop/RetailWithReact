@@ -58,3 +58,13 @@ export const getSaleReportWithPagination = {
             ...opt
         })
 }
+
+export const getSaleReportBySearch = {
+    useMutation: (opt?: UseMutationOptions<ApiResponse<PaginatedType>, Error, string, unknown>) => {
+            return useMutation({
+                mutationKey: ['searchSaleReport'],
+                mutationFn: (text: string) => saleServices.getSaleReportBySearch(text),
+                ...opt
+            })
+        }
+}

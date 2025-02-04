@@ -1,5 +1,5 @@
 import api from "@/api/index";
-import { DataTable } from "../../components/TableUI";
+import { DataTable } from "./chunks/ProductTable";
 import { ProductDialog } from "@/components/dialogs";
 import { columns } from "./chunks/columns";
 import { useEffect, useState, useMemo } from "react";

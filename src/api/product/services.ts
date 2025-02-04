@@ -10,6 +10,12 @@ const getAllProducts = async (): Promise<ApiResponse<ProductType[]>> => {
     return response.data;
 }
 
+const getProductBySearch = async (search: string): Promise<ApiResponse<PaginatedType>> => {
+    const response = await axios.get<ApiResponse<PaginatedType>>(`${baseUrl}/GetProductBySearch?search=${search}`)
+    
+    return response.data;
+}
+
 const addProduct = async (product: ProductInputType): Promise<ApiResponse<ProductInputType>> => {
     const response = await axios.post<ApiResponse<ProductInputType>>(`${baseUrl}/AddProduct`, product);
 
@@ -33,4 +39,4 @@ const getProductWithPagination = async (page: number, pageSize: number): Promise
     return response.data;
 }
 
-export default { getAllProducts, addProduct, updateProduct, deleteProduct, getProductWithPagination }
+export default { getAllProducts, addProduct, updateProduct, deleteProduct, getProductWithPagination, getProductBySearch }

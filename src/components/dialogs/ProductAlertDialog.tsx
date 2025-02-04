@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { clearCart } from "@/store/features/cartSlice";
 import { closeDialog } from "@/store/features/dialogSlice";
+import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 import { useQueryClient } from "@tanstack/react-query";
 
 const ProductAlertDialog = ({ isDelete }: { isDelete: boolean }) => {
@@ -24,6 +25,7 @@ const ProductAlertDialog = ({ isDelete }: { isDelete: boolean }) => {
   const queryClient = useQueryClient();
 
   const { mutate: deleteProductFn } = api.product.DeleteProduct.useMutation({
+    onMutate: () => dispatch(openLoader()),
     onError: (error) => {
       toast({
         title: "Error",
@@ -38,9 +40,11 @@ const ProductAlertDialog = ({ isDelete }: { isDelete: boolean }) => {
       });
       dispatch(closeDialog());
     },
+    onSettled: () => dispatch(hideLoader()),
   });
 
   const { mutate: checkOut } = api.cart.storeCart.useMutation({
+    onMutate: () => dispatch(openLoader()),
     onError: (error) => {
       toast({
         title: "Error",
@@ -57,6 +61,7 @@ const ProductAlertDialog = ({ isDelete }: { isDelete: boolean }) => {
       dispatch(clearCart())
       dispatch(closeDialog());
     },
+    onSettled: () => dispatch(hideLoader()),
   });
 
   const handleSubmit = () => {

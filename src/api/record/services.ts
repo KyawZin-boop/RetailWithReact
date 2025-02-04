@@ -28,4 +28,10 @@ const getSaleReportWithPagination = async (page: number, pageSize: number): Prom
     return response.data;
 }
 
-export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination }
+const getSaleReportBySearch = async (date: string): Promise<ApiResponse<PaginatedType>> => {
+    const response = await axios.get<ApiResponse<PaginatedType>>(`${baseUrl}/GetSaleReportBySearch?date=${date}`)
+    
+    return response.data;
+}
+
+export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination, getSaleReportBySearch }

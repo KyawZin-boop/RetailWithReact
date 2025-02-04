@@ -7,7 +7,7 @@ export default function useAuth() {
 
 	const userLogin = (input: string) => {
 		Cookies.set("retail-app-token", input)
-		console.log(input)
+		
 		setIsAuthenticated(true)
 	}
 

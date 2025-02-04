@@ -24,6 +24,7 @@ import { toast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { closeDialog } from "@/store/features/dialogSlice";
+import { hideLoader, openLoader } from "@/store/features/loaderSlice";
 
 const formSchema = z.object({
   productCode: z.string().min(4, {
@@ -52,6 +53,7 @@ const ProductDialog = () => {
   const queryClient = useQueryClient();
 
   const { mutate: addProduct } = api.product.AddProduct.useMutation({
+    onMutate: () => dispatch(openLoader()),
     onError: (error) => {
       toast({
         variant: "destructive",
@@ -66,9 +68,11 @@ const ProductDialog = () => {
       });
       dispatch(closeDialog());
     },
+    onSettled: () => dispatch(hideLoader()),
   });
 
   const { mutate: updateProduct } = api.product.UpdateProduct.useMutation({
+    onMutate: () => dispatch(openLoader()),
     onError: (error) => {
       toast({
         variant: "destructive",
@@ -83,6 +87,7 @@ const ProductDialog = () => {
       });
       dispatch(closeDialog());
     },
+    onSettled: () => dispatch(hideLoader()),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({

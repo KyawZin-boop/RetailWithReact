@@ -2,6 +2,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import {
@@ -43,12 +44,13 @@ export function DataTable<TData, TValue>({
     data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const totalPage = Math.ceil(totalProduct! / pageSize);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="rounded-md border">
         <Table>
           <TableHeader className="bg-blue-600">

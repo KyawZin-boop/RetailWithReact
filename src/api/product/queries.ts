@@ -61,3 +61,13 @@ export const getProductWithPagination = {
             ...opt
         })
 }
+
+export const getProductBySearch = {
+    useMutation: (opt?: UseMutationOptions<ApiResponse<PaginatedType>, Error, string, unknown>) => {
+        return useMutation({
+            mutationKey: ['searchProduct'],
+            mutationFn: (text: string) => productServices.getProductBySearch(text),
+            ...opt
+        })
+    }
+}
