@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, UseMutationOptions, QueriesOptions, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
-import {  ReportDateType, SaleReportType, TotalSummaryType } from "./types";
+import {  ReportDateType, SaleReportType, TotalSaleCount, TotalSummaryType } from "./types";
 import { ApiResponse, PaginatedType } from "@/shared/types";
 import saleServices from "./services"
 export const fetchSaleReport = {
@@ -67,4 +67,17 @@ export const getSaleReportBySearch = {
                 ...opt
             })
         }
+}
+
+export const getTotalSaleCountForEachProduct = {
+    useQuery: (opt?: UseQueryOptions<TotalSaleCount[], Error>) =>
+        useQuery<TotalSaleCount[], Error>({
+            queryKey: ['getTotalSaleCountForEachProduct'],
+            queryFn: async () => {
+                const response: ApiResponse<TotalSaleCount[]> = await saleServices.getTotalSaleCountForEachProduct();
+
+                return response.data;
+            },
+            ...opt
+        })
 }

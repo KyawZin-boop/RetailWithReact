@@ -18,6 +18,7 @@ import {
 import { openAlertDialog } from "@/store/features/dialogSlice";
 import { MinusIcon, PlusIcon, ShoppingBagIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const CartView = () => {
   const CartItems = useAppSelector((state: RootState) => state.cart.cartItems);
@@ -26,21 +27,29 @@ const CartView = () => {
 
   useEffect(() => {
     setTotalPrice(
-      CartItems.reduce((total: number, item: CartType) => total + item.price * item.quantity, 0)
+      CartItems.reduce(
+        (total: number, item: CartType) => total + item.price * item.quantity,
+        0
+      )
     );
   }, [CartItems]);
   return (
     <div>
       <main className="w-full p-10 pt-5">
-        <h1 className="text-3xl text-cyan-500 font-semibold text-center">
+        <h1 className="text-3xl text-cyan-500 font-semibold text-center drop-shadow-xl">
           Your Cart
           <ShoppingBagIcon className="inline ms-2 text-5xl" />
         </h1>
         {CartItems.length === 0 ? (
-          <div className="h-96 flex items-center justify-center">
-            <h2 className="text-4xl text-red-500 font-semibold text-center mt-5">
-              There's no Item in Cart Yet!
-            </h2>
+          <div className="h-[70vh] flex flex-col items-center justify-center">
+            <div className="w-[600px]">
+              <DotLottieReact
+                src="https://lottie.host/dcb6a089-2d4c-4112-a5e6-e5247eed7e2e/EKUUHeSjqy.lottie"
+                loop
+                autoplay
+              />
+            </div>
+            <h1 className="text-3xl font-semibold text-red-500 drop-shadow-xl">No Item in Cart!🤷‍♂️</h1>
           </div>
         ) : (
           <div>
@@ -114,14 +123,19 @@ const CartView = () => {
               </h1>
             </div>
             <div className="flex justify-end">
-              <Button className="bg-blue-500 hover:bg-blue-600" onClick={() => {dispatch(openAlertDialog(null))}}>
+              <Button
+                className="bg-blue-500 hover:bg-blue-600"
+                onClick={() => {
+                  dispatch(openAlertDialog(null));
+                }}
+              >
                 Checkout
               </Button>
             </div>
           </div>
         )}
       </main>
-      <ProductAlertDialog isDelete={false}/>
+      <ProductAlertDialog isDelete={false} />
     </div>
   );
 };

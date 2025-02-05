@@ -24,3 +24,8 @@ export type paginationInfo = {
     page: number,
     pageSize: number
 }
+
+export type TotalSaleCount = {
+    productName: string,
+    saleCount: number
+}

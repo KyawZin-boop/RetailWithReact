@@ -1,5 +1,5 @@
 import { ApiResponse, PaginatedType } from "@/shared/types";
-import { ReportDateType, SaleReportType, TotalSummaryType } from "./types";
+import { ReportDateType, SaleReportType, TotalSaleCount, TotalSummaryType } from "./types";
 import axios from "../../configs/axios";
 
 const baseUrl = '/Manager'
@@ -34,4 +34,10 @@ const getSaleReportBySearch = async (date: string): Promise<ApiResponse<Paginate
     return response.data;
 }
 
-export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination, getSaleReportBySearch }
+const getTotalSaleCountForEachProduct = async (): Promise<ApiResponse<TotalSaleCount[]>> => {
+    const response = await axios.get<ApiResponse<TotalSaleCount[]>>(`${baseUrl}/GetTotalSaleCountForEachProduct`)
+
+    return response.data;
+}
+
+export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination, getSaleReportBySearch, getTotalSaleCountForEachProduct }
