@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/table";
 import { RootState, useAppDispatch, useAppSelector } from "@/store";
 import {
+  clearCart,
   increaseItem,
   reduceItem,
   removeFromCart,
@@ -49,7 +50,9 @@ const CartView = () => {
                 autoplay
               />
             </div>
-            <h1 className="text-3xl font-semibold text-red-500 drop-shadow-xl">No Item in Cart!🤷‍♂️</h1>
+            <h1 className="text-3xl font-semibold text-red-500 drop-shadow-xl">
+              No Item in Cart!🤷‍♂️
+            </h1>
           </div>
         ) : (
           <div>
@@ -117,12 +120,21 @@ const CartView = () => {
               </TableBody>
             </Table>
             <div className="flex justify-end my-5">
+              
+            </div>
+            <div className="flex justify-end my-5">
               <h1 className="text-2xl font-semibold text-blue-600">
                 Total Price :
                 <span className="text-gray-700"> $ {totalPrice}</span>
               </h1>
             </div>
             <div className="flex justify-end">
+            <button
+                className="bg-red-500 hover:bg-red-600 rounded-md p-1 px-4 mr-3 text-white"
+                onClick={() => dispatch(clearCart())}
+              >
+                Remove All
+              </button>
               <Button
                 className="bg-blue-500 hover:bg-blue-600"
                 onClick={() => {

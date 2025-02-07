@@ -40,4 +40,10 @@ const getTotalSaleCountForEachProduct = async (): Promise<ApiResponse<TotalSaleC
     return response.data;
 }
 
-export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination, getSaleReportBySearch, getTotalSaleCountForEachProduct }
+const getSaleReportByDate = async (date: string): Promise<ApiResponse<TotalSaleCount[]>> => {
+    const response = await axios.get<ApiResponse<TotalSaleCount[]>>(`${baseUrl}/GetTotalSaleCountByDay?date=${date}`)
+    
+    return response.data;
+}
+
+export default { getSaleReport, getTotalSummary, getSaleReportWithinDate, getSaleReportWithPagination, getSaleReportBySearch, getTotalSaleCountForEachProduct, getSaleReportByDate }

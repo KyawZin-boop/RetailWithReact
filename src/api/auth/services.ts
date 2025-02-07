@@ -5,7 +5,7 @@ const baseUrl = 'User'
 
 const login = async (credentials: LoginPayload) => {
     const response = await axios.post(`${baseUrl}/Login`, credentials)
-    console.log(response.data)
+    
     return response.data
 }
 
